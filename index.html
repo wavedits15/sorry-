@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz App with Timer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz App</h1>
+    <div id="timer">Time Left: <span id="time">30</span> sec</div>
+    <div id="question-container">
+      <div id="question"></div>
+      <ul id="options"></ul>
+      <div id="feedback"></div>
+    </div>
+    <button id="next-btn">Next</button>
+    <div id="result"></div>
+    <button id="restart-btn" style="display: none;">Restart Quiz</button>
+  </div>
+
+  <script>
+      let questions = [
+        { question: "What is the capital of France?", options: ["Berlin", "London", "Paris", "Madrid"], answer: "Paris" },
+        { question: "Which language is used for web apps?", options: ["Python", "JavaScript", "C++", "Java"], answer: "JavaScript" },
+        { question: "Who is the founder of Microsoft?", options: ["Steve Jobs", "Bill Gates", "Mark Zuckerberg", "Elon Musk"], answer: "Bill Gates" },
+        { question: "What does HTML stand for?", options: ["HyperText Markup Language", "HighText Machine Language", "Hyperlink Text", "None of these"], answer: "HyperText Markup Language" },
+        { question: "Which planet is known as the Red Planet?", options: ["Mars", "Jupiter", "Saturn", "Venus"], answer: "Mars" },
+        { question: "What is 5 + 7?", options: ["10", "11", "12", "13"], answer: "12" },
+        { question: "Which tag is used to add a link in HTML?", options: ["<a>", "<link>", "<href>", "<ul>"], answer: "<a>" },
+        { question: "CSS is used for?", options: ["Styling the webpage", "Structuring", "Database", "None"], answer: "Styling the webpage" },
+      { question: "Input device is?", options: ["Printer", "Monitor", "Keyboard", "Speaker"], answer: "Keyboard" },
+      { question: "Next number in: 2, 4, 8, 16, ?", options: ["20", "32", "24", "30"], answer: "32" }
+    ];
+
+    questions = questions.sort(() => Math.random() - 0.5);
+
+
+    let currentQuestion = 0;
+    let score = 0;
+    let timeLeft = 30;
+    let timer;
+    let answered = false;
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function showQuestion(index) {
+      const q = questions[index];
+      document.getElementById('question').textContent = q.question;
+      const optionsList = document.getElementById('options');
+      optionsList.innerHTML = '';
+      document.getElementById('feedback').textContent = '';
+      answered = false;
+
+      q.options.forEach(option => {
+        const li = document.createElement('li');
+        li.textContent = option;
+        li.onclick = () => selectOption(li, option);
+        li.classList.remove('correct', 'wrong');
+        optionsList.appendChild(li);
+      });
+
+      document.getElementById('question').style.animation = 'fadeIn 0.5s forwards';
+    }
+
+    function selectOption(li, option) {
+      if (answered) return;
+
+      const q = questions[currentQuestion];
+      const options = document.querySelectorAll('#options li');
+      options.forEach(item => item.classList.remove('selected', 'correct', 'wrong'));
+      li.classList.add('selected');
+      answered = true;
+
+      if (option === q.answer) {
+        li.classList.add('correct');
+        document.getElementById('feedback').textContent = "Correct Answer! ✅";
+        score++;
+      } else {
+        li.classList.add('wrong');
+        document.getElementById('feedback').textContent = `Wrong! ❌ (Correct: ${q.answer})`;
+        options.forEach(item => {
+          if (item.textContent === q.answer) {
+            item.classList.add('correct');
+          }
+        });
+      }
+
+      document.getElementById('next-btn').disabled = false;
+    }
+
+    function startTimer() {
+      timeLeft = 30;
+      document.getElementById('time').textContent = timeLeft;
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('time').textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          showResult();
+        }
+      }, 1000);
+    }
+
+    function showResult() {
+      document.getElementById('question-container').style.display = 'none';
+      document.getElementById('next-btn').style.display = 'none';
+      document.getElementById('timer').style.display = 'none';
+
+      const percentage = Math.round((score / questions.length) * 100);
+      let grade = percentage >= 90 ? "A+" : percentage >= 75 ? "A" : percentage >= 60 ? "B" : percentage >= 40 ? "C" : "Fail";
+
+      document.getElementById('result').innerHTML = `
+        <h2>Quiz Over!</h2>
+        <p>Score: ${score}/${questions.length}</p>
+        <p>Percentage: ${percentage}%</p>
+        <p>Grade: <strong>${grade}</strong></p>
+      `;
+      document.getElementById('restart-btn').style.display = 'inline-block';
+    }
+
+    document.getElementById('next-btn').onclick = function () {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion(currentQuestion);
+        this.disabled = true;
+      } else {
+        clearInterval(timer);
+        showResult();
+      }
+    };
+
+    document.getElementById('restart-btn').onclick = function () {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('question-container').style.display = 'block';
+      document.getElementById('next-btn').style.display = 'inline-block';
+      document.getElementById('timer').style.display = 'block';
+      thfuycj yghv ynh ubh is.style.display = 'none';
+      showQuestion(currentQuestion);
+      document.getElementById('next-btn').disabled = true;
+      startTimer();
+    };
+
+    showQuestion(currentQuestion);
+    document.getElementById('next-btn').disabled = true;
+    startTimer();
+  </script> 
+</body>
+</html>
+
+
+

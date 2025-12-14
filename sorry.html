@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sorry Babeee</title>
+  <style>
+    body{
+      margin:0;
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#ffb6c1,#ffc0cb,#ffe4e1);
+      font-family:'Segoe UI',sans-serif;
+      overflow:hidden;
+    }
+    .card{
+      background:white;
+      width:330px;
+      padding:25px;
+      border-radius:22px;
+      text-align:center;
+      box-shadow:0 15px 40px rgba(0,0,0,0.2);
+      animation:pop 1s ease;
+      position:relative;
+    }
+    @keyframes pop{
+      from{transform:scale(0.5);opacity:0}
+      to{transform:scale(1);opacity:1}
+    }
+    h2{color:#ff4d6d;margin-bottom:10px;}
+    p{color:#444;font-size:15px;}
+    button{
+      margin-top:20px;
+      padding:10px 22px;
+      border:none;
+      border-radius:30px;
+      background:#ff4d6d;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      animation:heartbeat 1.5s infinite;
+    }
+    @keyframes heartbeat{
+      0%{transform:scale(1)}
+      50%{transform:scale(1.1)}
+      100%{transform:scale(1)}
+    }
+    .hidden{display:none;}
+
+    /* Floating hearts */
+    .heart{
+      position:absolute;
+      bottom:-20px;
+      color:#ff4d6d;
+      animation:floatUp 5s linear infinite;
+      font-size:22px;
+    }
+
+    @keyframes floatUp{
+      from{transform:translateY(0);opacity:1}
+      to{transform:translateY(-600px);opacity:0}
+    }
+
+    /* Stickers page */
+    .stickers span{
+      font-size:30px;
+      margin:8px;
+      animation:bounce 2s infinite;
+      display:inline-block;
+    }
+    @keyframes bounce{
+      50%{transform:translateY(-8px)}
+    }
+
+    /* Envelope */
+    .envelope{
+      width:220px;height:140px;background:#ff8fa3;position:relative;
+      margin:20px auto;border-radius:10px;overflow:hidden;
+    }
+    .flap{
+      position:absolute;top:0;left:0;width:100%;height:70px;
+      background:#ff4d6d;clip-path:polygon(0 0,50% 100%,100 0);
+      animation:openFlap 2s forwards;
+    }
+    @keyframes openFlap{to{transform:rotateX(180deg);transform-origin:top}}
+    .letter{
+      background:white;margin:25px auto;padding:15px;width:180px;
+      border-radius:10px;animation:slideUp 2s forwards;
+    }
+    @keyframes slideUp{
+      from{transform:translateY(60px);opacity:0}
+      to{transform:translateY(0);opacity:1}
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c3c45b8f1.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="step1">
+  <h2>Hieee Babbbbee 💕</h2>
+  <p>I'm really sorry!! 💗</p>
+  <p>I never meant to hurt you, even a little 😔</p>
+  <button onclick="next1()">Open it 💌</button>
+</div>
+
+<div class="card hidden" id="step2">
+  <div class="envelope">
+    <div class="flap"></div>
+    <div class="letter">
+      <p><strong>Sorryyyy 💖</strong></p>
+      <p>really really really sorry babu bachha  🫶</p>
+    </div>
+  </div>
+  <button onclick="next2()">One more 💞</button>
+</div>
+
+<div class="card hidden" id="step3">
+  <h2>Just Cute Things 💕</h2>
+  <div class="stickers">
+    <span>🐻</span><span>💗</span><span>🥺</span><span>🌸</span><span>🧸</span>
+  </div>
+  <p>Every little thing here is just to make you smile.</p>
+  <button onclick="next3()">Next 💞</button>
+</div>
+<div class="card hidden" id="step4">
+  <h2>you know na i say anything when i am angry…</h2>
+  <p>But I never want to hurt you.</p>
+  <p>I am really sorry, my Mr. Handsome 💕</p>
+  <button onclick="next4()">Next 🫶</button>
+</div>
+
+<div class="card hidden" id="step5">
+  <h2>Did you forgive me, babu? 🥺</h2>
+  <p>If yes… then thank uh and love uh babu 💞</p>
+
+</div>
+
+<script>
+  function next1(){
+    document.getElementById('bgMusic').play();
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  }
+  function next2(){
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+    createHearts();
+  }
+  function next3(){
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step4').classList.remove('hidden');
+  }
+  function next4(){
+    document.getElementById('step4').classList.add('hidden');
+    document.getElementById('step5').classList.remove('hidden');
+  }
+  function hug(){
+    alert('Love you, uh babu! 🤍');
+  }
+  function createHearts(){
+    for(let i=0;i<15;i++){
+      let h=document.createElement('div');
+      h.className='heart';
+      h.innerText='❤️';
+      h.style.left=Math.random()*100+'%';
+      h.style.animationDuration=(3+Math.random()*3)+'s';
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(),6000);
+    }
+  }
+</script>
+
+</body>
+</html>
